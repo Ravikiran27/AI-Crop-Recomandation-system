@@ -1,19 +1,35 @@
 import streamlit as st
+import google.generativeai as genai
 import pandas as pd
 
-st.title("Fertiliser Recommendation & Database")
-
-# Load fertiliser database
-def load_fertilisers():
-    return pd.read_csv('data/fertilisers.csv')
+st.title("Fertiliser Recommendation & Gemini AI Suggestions")
 
 fertilisers = load_fertilisers()
 
-# Fertiliser recommendation
-crop = st.selectbox("Select Crop", fertilisers['suitable_crops'].str.split(';').explode().unique())
-recommended = fertilisers[fertilisers['suitable_crops'].str.contains(crop)]
-st.markdown(f"### Recommended Fertilisers for {crop}")
-st.dataframe(recommended)
+# Gemini API setup
+api_key = st.secrets.get("GEMINI_API_KEY", "AIzaSyA6IY3vNUPKBEneRYcomPg2fRvNtLb0vRI")
+genai.configure(api_key=api_key)
+
+# Recommendation history
+if "fertiliser_history" not in st.session_state:
+    st.session_state["fertiliser_history"] = []
+
+# Fertiliser recommendation using Gemini API
+crop = st.selectbox("Select Crop", ["Rice", "Wheat", "Cotton", "Maize"])
+if st.button("Get Gemini Fertiliser Recommendation"):
+    prompt = f"Suggest the best fertiliser for {crop} crop with brief reason."
+    model = genai.GenerativeModel("gemini-pro")
+    response = model.generate_content(prompt)
+    suggestion = response.text
+    st.session_state["fertiliser_history"].append({"crop": crop, "suggestion": suggestion})
+    st.markdown(f"### Gemini AI Fertiliser Recommendation for {crop}")
+    st.info(suggestion)
+
+# Show history
+st.markdown("---")
+st.markdown("### Fertiliser Recommendation History")
+for entry in st.session_state["fertiliser_history"]:
+    st.markdown(f"**Crop:** {entry['crop']}<br>**Suggestion:** {entry['suggestion']}", unsafe_allow_html=True)
 
 # Add new fertiliser
 with st.form("Add Fertiliser"):
