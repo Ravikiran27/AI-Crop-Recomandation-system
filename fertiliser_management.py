@@ -1,3 +1,9 @@
+st.title("Fertiliser Recommendation & Database")
+fertilisers = load_fertilisers()
+st.dataframe(fertilisers)
+st.markdown(f"### Recommended Fertilisers for {crop}")
+st.dataframe(recommended)
+
 import streamlit as st
 import pandas as pd
 
