@@ -130,7 +130,7 @@ if not st.session_state["farmer_logged_in"]:
                 st.session_state["farmer_logged_in"] = True
                 st.session_state["farmer_name"] = name
                 st.session_state["farmer_id"] = fid
-                st.experimental_rerun()
+                st.rerun()
             else:
                 signin_error = "Invalid contact or password."
         if signin_error:
@@ -336,4 +336,4 @@ else:
         st.session_state["farmer_logged_in"] = False
         st.session_state["farmer_name"] = ""
         st.session_state["farmer_id"] = None
-        st.experimental_rerun()
+        st.rerun()
