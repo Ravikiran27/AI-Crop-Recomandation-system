@@ -1,5 +1,16 @@
 
 # Load model with caching
+import streamlit as st
+import pandas as pd
+import joblib
+import numpy as np
+import sqlite3
+from pandas.api.types import CategoricalDtype
+import importlib
+import hashlib
+from farmer_db import get_db_connection
+
+# Load model with caching
 @st.cache_resource
 def load_model():
     try:
@@ -9,8 +20,6 @@ def load_model():
     except Exception as e:
         st.error(f"Error loading model: {e}")
         return None, None, False
-import streamlit as st
-import pandas as pd
 import joblib
 import numpy as np
 import sqlite3
