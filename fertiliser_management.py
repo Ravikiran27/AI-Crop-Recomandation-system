@@ -8,7 +8,6 @@ def load_fertilisers():
     return pd.read_csv('data/fertilisers.csv')
 
 fertilisers = load_fertilisers()
-st.dataframe(fertilisers)
 
 # Fertiliser recommendation
 crop = st.selectbox("Select Crop", fertilisers['suitable_crops'].str.split(';').explode().unique())
