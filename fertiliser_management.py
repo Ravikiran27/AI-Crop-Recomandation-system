@@ -1,10 +1,10 @@
 import streamlit as st
 import google.generativeai as genai
-import pandas as pd
 
 st.title("Fertiliser Recommendation & Gemini AI Suggestions")
 
 fertilisers = load_fertilisers()
+
 
 # Gemini API setup
 api_key = st.secrets.get("GEMINI_API_KEY", "AIzaSyA6IY3vNUPKBEneRYcomPg2fRvNtLb0vRI")
