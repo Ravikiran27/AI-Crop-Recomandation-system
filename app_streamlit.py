@@ -1,3 +1,12 @@
+@st.cache_resource
+def load_model():
+    try:
+        model = joblib.load('models/crop_recommendation_model.pkl')
+        encoder = joblib.load('models/label_encoder.pkl')
+        return model, encoder, True
+    except Exception as e:
+        st.error(f"Error loading model: {e}")
+        return None, None, False
 import streamlit as st
 import pandas as pd
 import joblib
