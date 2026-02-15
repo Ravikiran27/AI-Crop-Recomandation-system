@@ -277,5 +277,10 @@ else:
 # Make chat support available everywhere (sidebar persistent button)
 with st.sidebar:
     if st.session_state.get("farmer_logged_in", False):
-        if st.button("💬 Chat Support"):
-            importlib.import_module("chatbot")
+        st.markdown("---")
+        if st.button("💬 Chat Support", key="chat_support"):
+            st.session_state["show_chat"] = True
+
+# Always show chat if requested
+if st.session_state.get("show_chat", False):
+    importlib.import_module("chatbot")
