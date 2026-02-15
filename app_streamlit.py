@@ -1,3 +1,5 @@
+
+# Load model with caching
 @st.cache_resource
 def load_model():
     try:
