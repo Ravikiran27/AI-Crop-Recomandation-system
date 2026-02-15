@@ -22,6 +22,23 @@ recommended = fertilisers[fertilisers['suitable_crops'].str.contains(crop)]
 st.markdown(f"### Recommended Fertilisers for {crop}")
 st.dataframe(recommended)
 
+import streamlit as st
+import pandas as pd
+
+st.title("Fertiliser Recommendation & Database")
+
+# Load fertiliser database
+def load_fertilisers():
+    return pd.read_csv('data/fertilisers.csv')
+
+fertilisers = load_fertilisers()
+st.dataframe(fertilisers)
+
+crop = st.selectbox("Select Crop", fertilisers['suitable_crops'].str.split(';').explode().unique())
+recommended = fertilisers[fertilisers['suitable_crops'].str.contains(crop)]
+st.markdown(f"### Recommended Fertilisers for {crop}")
+st.dataframe(recommended)
+
 # Add new fertiliser
 with st.form("Add Fertiliser"):
     name = st.text_input("Name")
