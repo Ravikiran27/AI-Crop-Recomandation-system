@@ -3,9 +3,6 @@ import google.generativeai as genai
 
 st.title("Fertiliser Recommendation & Gemini AI Suggestions")
 
-fertilisers = load_fertilisers()
-
-
 # Gemini API setup
 api_key = st.secrets.get("GEMINI_API_KEY", "AIzaSyA6IY3vNUPKBEneRYcomPg2fRvNtLb0vRI")
 genai.configure(api_key=api_key)
@@ -30,19 +27,3 @@ st.markdown("---")
 st.markdown("### Fertiliser Recommendation History")
 for entry in st.session_state["fertiliser_history"]:
     st.markdown(f"**Crop:** {entry['crop']}<br>**Suggestion:** {entry['suggestion']}", unsafe_allow_html=True)
-
-# Add new fertiliser
-with st.form("Add Fertiliser"):
-    name = st.text_input("Name")
-    type_ = st.text_input("Type")
-    suitable_crops = st.text_input("Suitable Crops (comma separated)")
-    application = st.text_area("Application")
-    notes = st.text_area("Notes")
-    submitted = st.form_submit_button("Add Fertiliser")
-    if submitted:
-        new_id = fertilisers['id'].max() + 1 if not fertilisers.empty else 1
-        new_row = {"id": new_id, "name": name, "type": type_, "suitable_crops": suitable_crops, "application": application, "notes": notes}
-        fertilisers = pd.concat([fertilisers, pd.DataFrame([new_row])], ignore_index=True)
-        fertilisers.to_csv('data/fertilisers.csv', index=False)
-        st.success("Fertiliser added!")
-        st.rerun()
