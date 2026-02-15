@@ -1,5 +1,0 @@
-# Fertiliser Database
-# Columns: id, name, type, suitable_crops, application, notes
-id,name,type,suitable_crops,application,notes
-1,Urea,Nitrogen,Rice;Wheat,Apply before sowing,Common fertiliser
-2,Potash,Potassium,Cotton;Maize,Apply during growth,Improves yield
